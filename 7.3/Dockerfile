@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.3-fpm-stretch
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -30,7 +30,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-webp-di
 RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install memcached && docker-php-ext-enable memcached
 RUN pecl install apcu && docker-php-ext-enable apcu
-RUN pecl install ssh2-1.1.2 && docker-php-ext-enable ssh2
+RUN pecl install ssh2-1.2 && docker-php-ext-enable ssh2
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1

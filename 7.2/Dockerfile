@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.2-fpm-stretch
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -30,7 +30,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-webp-di
 RUN pecl install imagick && docker-php-ext-enable imagick \
   && pecl install apcu && docker-php-ext-enable apcu \
   && pecl install apcu_bc && docker-php-ext-enable --ini-name=docker-php-ext-apcu_bc.ini apc \
-  && pecl install ssh2-1.0 && docker-php-ext-enable ssh2 \
+  && pecl install ssh2-1.2 && docker-php-ext-enable ssh2 \
   && pecl install memcached && docker-php-ext-enable memcached
 
 # Install Composer

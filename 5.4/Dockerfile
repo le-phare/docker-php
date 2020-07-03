@@ -1,7 +1,8 @@
-FROM lephare/debian:wheezy
+FROM debian/eol:wheezy
 
-RUN usermod -u 1000 www-data \
-    && apt-get update \
+ENV PHP_INI_DIR /etc/php5
+
+RUN apt-get update \
     && apt-get install -y \
       locales curl git libxrender1 \
       php-apc php5-cli php5-common php5-curl php5-fpm php5-gd php5-imagick \
@@ -12,6 +13,9 @@ RUN usermod -u 1000 www-data \
     && locale-gen \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN echo 'Europe/Paris' | tee /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 EXPOSE 9000
 
@@ -32,6 +36,6 @@ WORKDIR /var/www/symfony
 
 CMD usermod -u $DOCKER_USER_ID www-data && php5-fpm -F
 
-COPY symfony.ini /etc/php5/fpm/conf.d/
-COPY symfony.ini /etc/php5/cli/conf.d/
-COPY symfony.pool.conf /etc/php5/fpm/pool.d/
+COPY symfony.ini $PHP_INI_DIR/fpm/conf.d/
+COPY symfony.ini $PHP_INI_DIR/cli/conf.d/
+COPY symfony.pool.conf $PHP_INI_DIR/fpm/pool.d/
