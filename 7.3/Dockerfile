@@ -1,5 +1,7 @@
 FROM php:7.3-fpm-stretch
 
+ENV XDEBUG_MODE off
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     locales \
@@ -31,6 +33,7 @@ RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install memcached && docker-php-ext-enable memcached
 RUN pecl install apcu && docker-php-ext-enable apcu
 RUN pecl install ssh2-1.2 && docker-php-ext-enable ssh2
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
