@@ -33,7 +33,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
 
 # Extra extensions using pickle: https://github.com/docker-library/php/pull/840#issuecomment-502251019
 
-# XXX: missing extensions: imagick, ssh2
+# XXX: missing extensions: imagick
 # ---------------------------------------------------
 ADD https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar /usr/local/bin/pickle 
 ENV PICKLE_EXTENSIONS=${PICKLE_EXTENSIONS:-"apcu memcached"}
