@@ -2,6 +2,9 @@ FROM php:7.2-fpm-stretch
 
 ENV XDEBUG_MODE off
 
+# Xdebug: remote step debugging port
+EXPOSE 9003
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     locales \
