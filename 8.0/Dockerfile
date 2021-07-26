@@ -32,11 +32,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
   && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_pgsql soap pgsql exif
 
 # Extra extensions using pickle: https://github.com/docker-library/php/pull/840#issuecomment-502251019
-
-# XXX: missing extensions: imagick
-# ---------------------------------------------------
-ADD https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar /usr/local/bin/pickle 
-ENV PICKLE_EXTENSIONS=${PICKLE_EXTENSIONS:-"apcu memcached"}
+ADD https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.2/pickle.phar /usr/local/bin/pickle
+ENV PICKLE_EXTENSIONS=${PICKLE_EXTENSIONS:-"apcu memcached imagick"}
 RUN chmod +x /usr/local/bin/pickle && \
   ( \
     for extension in $PICKLE_EXTENSIONS; do \
