@@ -9,6 +9,7 @@ on:
     branches: [ master ]
   schedule:
     - cron: '0 12 * * SUN' # every sunday
+  workflow_dispatch:
 
 jobs:
 
