@@ -6,6 +6,7 @@ ENV XDEBUG_MODE off
 EXPOSE 9003
 
 RUN apt-get update \
+  && apt-get full-upgrade -y \
   && apt-get install -y --no-install-recommends \
     locales \
     git \

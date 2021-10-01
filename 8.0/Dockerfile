@@ -3,6 +3,7 @@ FROM php:8-fpm
 ARG PICKLE_EXTENSIONS
 
 RUN apt-get update \
+  && apt-get full-upgrade -y \
   && apt-get install -y --no-install-recommends \
     locales \
     git \
