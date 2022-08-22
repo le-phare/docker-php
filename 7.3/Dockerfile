@@ -1,7 +1,5 @@
 FROM php:7.3-fpm-stretch
 
-ENV XDEBUG_MODE off
-
 # Xdebug: remote step debugging port
 EXPOSE 9003
 
