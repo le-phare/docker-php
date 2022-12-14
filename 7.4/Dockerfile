@@ -1,28 +1,30 @@
 FROM php:7.4-fpm
 
+ENV XDEBUG_VERSION 3.1.6
+
 # Xdebug: remote step debugging port
 EXPOSE 9003
 
 RUN apt-get update \
   && apt-get full-upgrade -y \
   && apt-get install -y --no-install-recommends \
-    locales \
-    git \
-    ssh \
-    unzip \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libmemcached-dev \
-    libzip-dev \
-    libicu-dev \
-    libpq-dev \
-    libssh2-1 libssh2-1-dev \
-    libxml2-dev \
-    libwebp-dev \
-    libmagickwand-dev \
-    # oniguruma not bundled in php, use libonig: https://www.php.net/manual/en/migration74.other-changes.php
-    libonig-dev \
+  locales \
+  git \
+  ssh \
+  unzip \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libpng-dev \
+  libmemcached-dev \
+  libzip-dev \
+  libicu-dev \
+  libpq-dev \
+  libssh2-1 libssh2-1-dev \
+  libxml2-dev \
+  libwebp-dev \
+  libmagickwand-dev \
+  # oniguruma not bundled in php, use libonig: https://www.php.net/manual/en/migration74.other-changes.php
+  libonig-dev \
   && rm -rf /var/lib/apt/lists/* \
   && dpkg-reconfigure -f noninteractive locales \
   && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
@@ -38,7 +40,7 @@ RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install memcached && docker-php-ext-enable memcached
 RUN pecl install apcu && docker-php-ext-enable apcu
 RUN pecl install ssh2-1.2 && docker-php-ext-enable ssh2
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install xdebug-$XDEBUG_VERSION && docker-php-ext-enable xdebug
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
