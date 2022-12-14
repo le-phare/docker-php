@@ -5,6 +5,7 @@ Pre-configured docker image to follow [Le Phare](https://www.lephare.com) projec
 
 | Version | Supported until |
 |---------|-----------------|
+| 8.2     |                 |
 | 8.1     |                 |
 | 8.0     |                 |
 | 7.4     | 14 Dec. 2023    |
