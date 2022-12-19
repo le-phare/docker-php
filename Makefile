@@ -1,6 +1,6 @@
 DOCKER_IMAGE ?= lephare/php
 PHP_VERSIONS ?= $(patsubst %/,%,$(sort $(dir $(wildcard */Dockerfile))))
-SUPPORTED_VERSIONS ?= 7.4 8.0 8.1
+SUPPORTED_VERSIONS ?= 7.4 8.0 8.1 8.2
 
 .PHONY: $(PHP_VERSIONS) all
 
