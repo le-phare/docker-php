@@ -50,7 +50,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ${{ matrix.php_version }}
+          context: "{{defaultContext}}:${{ matrix.php_version }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ matrix.php_version }}
           labels: ${{ steps.meta.outputs.labels }}
