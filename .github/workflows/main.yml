@@ -43,7 +43,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: lephare/php
-          context: ${{ matrix.php_version }}
+          context: workflow
           tags: |
             type=raw,${{ matrix.php_version }}
 
