@@ -1,16 +1,12 @@
-name: Build PHP docker images
+name: Build Unmaintained PHP images
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches:
-        - master
+        - unmaintained
   pull_request:
     branches:
-        - master
-  schedule:
-    - cron: '0 12 * * SUN' # every sunday
+        - unmaintained
   workflow_dispatch:
 
 jobs:
@@ -20,7 +16,13 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        php_version: ['7.4', '8.0', '8.1', '8.2']
+        php_version:
+            # - '5.4'
+            # - '5.6'
+            - '7.0'
+            - '7.1'
+            - '7.2'
+            - '7.3'
 
     steps:
       - uses: actions/checkout@v2

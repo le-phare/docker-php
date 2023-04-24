@@ -1,11 +1,13 @@
-FROM php:7.2-fpm-stretch
+FROM php:7.2-fpm
+
+ENV XDEBUG_VERSION 3.1.6
 
 # Xdebug: remote step debugging port
 EXPOSE 9003
 
 RUN apt-get update \
-  && apt-get full-upgrade -y \
-  && apt-get install -y --no-install-recommends \
+    && apt-get full-upgrade -y \
+    && apt-get install -y --no-install-recommends \
     locales \
     git \
     ssh \
@@ -21,22 +23,22 @@ RUN apt-get update \
     libxml2-dev \
     libwebp-dev \
     libmagickwand-dev \
-  && rm -rf /var/lib/apt/lists/* \
-  && dpkg-reconfigure -f noninteractive locales \
-  && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
-  && echo 'fr_FR.UTF-8 UTF-8' >> /etc/locale.gen \
-  && locale-gen
+    && rm -rf /var/lib/apt/lists/* \
+    && dpkg-reconfigure -f noninteractive locales \
+    && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
+    && echo 'fr_FR.UTF-8 UTF-8' >> /etc/locale.gen \
+    && locale-gen
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-webp-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-  && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_pgsql pdo_mysql soap pgsql mysqli exif
+    && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_pgsql pdo_mysql soap pgsql mysqli exif
 
 # PECL modules
 RUN pecl install imagick && docker-php-ext-enable imagick \
-  && pecl install apcu && docker-php-ext-enable apcu \
-  && pecl install apcu_bc && docker-php-ext-enable --ini-name=docker-php-ext-apcu_bc.ini apc \
-  && pecl install ssh2-1.2 && docker-php-ext-enable ssh2 \
-  && pecl install memcached && docker-php-ext-enable memcached \
-  && pecl install xdebug && docker-php-ext-enable xdebug
+    && pecl install apcu && docker-php-ext-enable apcu \
+    && pecl install apcu_bc && docker-php-ext-enable --ini-name=docker-php-ext-apcu_bc.ini apc \
+    && pecl install ssh2-1.2 && docker-php-ext-enable ssh2 \
+    && pecl install memcached && docker-php-ext-enable memcached \
+    && pecl install xdebug-$XDEBUG_VERSION && docker-php-ext-enable xdebug
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1

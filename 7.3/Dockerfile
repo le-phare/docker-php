@@ -1,11 +1,13 @@
-FROM php:7.3-fpm-stretch
+FROM php:7.3-fpm
+
+ENV XDEBUG_VERSION 3.1.6
 
 # Xdebug: remote step debugging port
 EXPOSE 9003
 
 RUN apt-get update \
-  && apt-get full-upgrade -y \
-  && apt-get install -y --no-install-recommends \
+    && apt-get full-upgrade -y \
+    && apt-get install -y --no-install-recommends \
     locales \
     git \
     ssh \
@@ -21,21 +23,21 @@ RUN apt-get update \
     libxml2-dev \
     libwebp-dev \
     libmagickwand-dev \
-  && rm -rf /var/lib/apt/lists/* \
-  && dpkg-reconfigure -f noninteractive locales \
-  && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
-  && echo 'fr_FR.UTF-8 UTF-8' >> /etc/locale.gen \
-  && locale-gen
+    && rm -rf /var/lib/apt/lists/* \
+    && dpkg-reconfigure -f noninteractive locales \
+    && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
+    && echo 'fr_FR.UTF-8 UTF-8' >> /etc/locale.gen \
+    && locale-gen
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-webp-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-  && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_pgsql pdo_mysql soap pgsql mysqli exif
+    && docker-php-ext-install -j$(nproc) intl gd opcache mbstring zip pdo_pgsql pdo_mysql soap pgsql mysqli exif
 
 # PECL modules
 RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install memcached && docker-php-ext-enable memcached
 RUN pecl install apcu && docker-php-ext-enable apcu
 RUN pecl install ssh2-1.2 && docker-php-ext-enable ssh2
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install xdebug-$XDEBUG_VERSION && docker-php-ext-enable xdebug
 
 # Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -43,10 +45,10 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Install Blackfire
 RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
-  && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
-  && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
-  && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so \
-  && echo "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707" > $PHP_INI_DIR/conf.d/blackfire.ini
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
+    && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so \
+    && echo "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707" > $PHP_INI_DIR/conf.d/blackfire.ini
 
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
