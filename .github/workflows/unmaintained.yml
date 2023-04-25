@@ -28,11 +28,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
+        id: setup-buildx
         uses: docker/setup-buildx-action@v2
         with:
           platforms: |
             linux/amd64
-            linux/arm64
+            # linux/arm64
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -51,12 +52,10 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ${{ matrix.php_version }}
+          context: "{{defaultContext}}:${{ matrix.php_version }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ matrix.php_version }}
           labels: ${{ steps.meta.outputs.labels }}
+          platforms: ${{ steps.setup-buildx.outputs.platforms }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: |
-            linux/amd64
-            linux/arm64
