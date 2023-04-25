@@ -54,7 +54,7 @@ jobs:
         with:
           context: "{{defaultContext}}:${{ matrix.php_version }}"
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ matrix.php_version }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: ${{ steps.setup-buildx.outputs.platforms }}
           cache-from: type=gha
