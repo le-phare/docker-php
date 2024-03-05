@@ -1,0 +1,38 @@
+services:
+  php_74:
+    build:
+      tags:
+        - lephare/php:7.4
+      target: php_74
+      x-bake: &build-x-bake
+        platforms:
+          - linux/amd64
+          - linux/arm64
+
+  php_80:
+    build:
+      tags:
+        - lephare/php:8.0
+      target: php_80
+      x-bake: *build-x-bake
+
+  php_81:
+    build:
+      tags:
+        - lephare/php:8.1
+      target: php_81
+      x-bake: *build-x-bake
+
+  php_82:
+    build:
+      tags:
+        - lephare/php:8.2
+      target: php_82
+      x-bake: *build-x-bake
+
+  php_83:
+    build:
+      tags:
+        - lephare/php:8.3
+      target: php_83
+      x-bake: *build-x-bake
