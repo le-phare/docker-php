@@ -1,18 +1,18 @@
 ARG PHP_VERSION
 ARG PHP_EXTENSIONS
 
-FROM php:${PHP_VERSION}-fpm
+FROM mlocati/php-extension-installer:2 as extension-installer
+FROM php:${PHP_VERSION}-fpm as base
+FROM base
 
-WORKDIR /usr/local/etc/php/conf.d/
-COPY --link symfony.ini .
-WORKDIR /usr/local/etc/php/pool.d/
-COPY --link symfony.pool.conf .
+WORKDIR /usr/local/etc/php
+COPY --link symfony.ini ./conf.d/
+COPY --link symfony.pool.conf ./pool.d/
 
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+COPY --from=extension-installer /usr/bin/install-php-extensions /usr/local/bin
 
-RUN install-php-extensions ${PHP_EXTENSIONS}
+RUN install-php-extensions "${PHP_EXTENSIONS}"
 
-RUN usermod -u 1000 www-data
-RUN usermod -G staff www-data
+RUN usermod -u 1000 www-data && usermod -G staff www-data
 
 WORKDIR /var/www/symfony
