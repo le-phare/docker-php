@@ -1,0 +1,5 @@
+function hadolint() {
+  docker run --rm -i -v ./hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint < Dockerfile
+}
+
+echo hadolint
