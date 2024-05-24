@@ -1,11 +1,6 @@
-DOCKER_IMAGE ?= lephare/php
-PHP_VERSIONS ?= $(patsubst %/,%,$(sort $(dir $(wildcard */Dockerfile))))
-SUPPORTED_VERSIONS ?= 7.4 8.0 8.1 8.2
+build:
+	docker buildx bake  --set '*.platform=linux/amd64'
 
-.PHONY: $(PHP_VERSIONS) all
-
-supported: $(SUPPORTED_VERSIONS)
-all: $(PHP_VERSIONS)
-
-$(PHP_VERSIONS):
-	docker buildx build -t $(DOCKER_IMAGE):$@ $@
+build-arm:
+	docker run --privileged --rm tonistiigi/binfmt --install all
+	docker buildx bake  --set '*.platform=linux/arm64'
