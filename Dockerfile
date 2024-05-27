@@ -11,6 +11,10 @@ COPY --link symfony.pool.conf ./pool.d/
 
 COPY --from=extension-installer /usr/bin/install-php-extensions /usr/local/bin
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git=1:2.* \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN install-php-extensions ${PHP_EXTENSIONS}
 
 RUN usermod -u 1000 www-data && usermod -G staff www-data
