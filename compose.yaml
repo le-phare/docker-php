@@ -5,6 +5,7 @@ services:
       args: &build-args
         PHP_VERSION: "8.1"
         PHP_EXTENSIONS: "@composer apcu exif gd imagick intl memcached opcache pdo_mysql pdo_pgsql pgsql soap xdebug zip"
+        PHP_TIMEZONE: "Europe/Paris"
       x-bake: &build-x-bake
         platforms:
           - linux/amd64
@@ -26,7 +27,17 @@ services:
         PHP_VERSION: "8.3"
         PHP_EXTENSIONS: "@composer apcu exif gd intl memcached opcache pdo_mysql pdo_pgsql pgsql soap xdebug zip" # Disable Imagick for PHP 8.3 until https://github.com/Imagick/imagick/issues/640 is fixed
       x-bake: *build-x-bake
+
+  php_84:
+    image: lephare/php:8.4
+    build:
+      args:
+        <<: *build-args
+        PHP_VERSION: "8.4"
+        PHP_EXTENSIONS: "@composer apcu exif gd intl memcached opcache pdo_mysql pdo_pgsql pgsql soap xdebug zip" # Disable Imagick until https://github.com/Imagick/imagick/issues/640 is fixed
+        PHP_TIMEZONE: "UTC"
+      x-bake: *build-x-bake
       tags:
-        - lephare/php:8.3
+        - lephare/php:8.4
         - lephare/php:8
         - lephare/php:latest

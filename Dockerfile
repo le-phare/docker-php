@@ -1,12 +1,17 @@
 ARG PHP_VERSION
 
-FROM mlocati/php-extension-installer:2 as extension-installer
-FROM php:${PHP_VERSION}-fpm as base
+FROM mlocati/php-extension-installer:2 AS extension-installer
+FROM php:${PHP_VERSION}-fpm AS base
 FROM base
 ARG PHP_EXTENSIONS
+ARG PHP_TIMEZONE=UTC
 
 WORKDIR /usr/local/etc/php
 COPY --link symfony.ini ./conf.d/
+
+# override symfony.ini timezone placeholder
+RUN sed -i "s@PHP_TIMEZONE@${PHP_TIMEZONE}@g" /usr/local/etc/php/conf.d/symfony.ini
+
 COPY --link symfony.pool.conf ./pool.d/
 
 COPY --from=extension-installer /usr/bin/install-php-extensions /usr/local/bin
