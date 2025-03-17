@@ -25,7 +25,6 @@ services:
       args:
         <<: *build-args
         PHP_VERSION: "8.3"
-        PHP_EXTENSIONS: "@composer apcu exif gd intl memcached opcache pdo_mysql pdo_pgsql pgsql soap xdebug zip" # Disable Imagick for PHP 8.3 until https://github.com/Imagick/imagick/issues/640 is fixed
       x-bake: *build-x-bake
 
   php_84:
@@ -34,7 +33,6 @@ services:
       args:
         <<: *build-args
         PHP_VERSION: "8.4"
-        PHP_EXTENSIONS: "@composer apcu exif gd intl memcached opcache pdo_mysql pdo_pgsql pgsql soap xdebug zip" # Disable Imagick until https://github.com/Imagick/imagick/issues/640 is fixed
         PHP_TIMEZONE: "UTC"
       x-bake: *build-x-bake
       tags:
