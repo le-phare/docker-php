@@ -14,14 +14,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Lint Dockerfile
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: hadolint/hadolint-action@v3.1.0
-
   build:
     name: PHP
     runs-on: ubuntu-latest

@@ -1,4 +1,7 @@
-ARG PHP_VERSION
+# syntax=docker/dockerfile:1
+# check=error=true
+
+ARG PHP_VERSION=8.4
 
 FROM mlocati/php-extension-installer:2 AS extension-installer
 FROM php:${PHP_VERSION}-fpm AS base
