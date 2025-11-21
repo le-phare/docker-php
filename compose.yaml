@@ -37,5 +37,17 @@ services:
       x-bake: *build-x-bake
       tags:
         - lephare/php:8.4
+
+  php_85:
+    image: lephare/php:8.5
+    build:
+      args:
+        <<: *build-args
+        PHP_EXTENSIONS: "@composer apcu exif gd intl memcached opcache pdo_mysql pdo_pgsql pgsql soap zip" # remove after imagick and xdebug are fixed
+        PHP_VERSION: "8.5"
+        PHP_TIMEZONE: "UTC"
+      x-bake: *build-x-bake
+      tags:
+        - lephare/php:8.5
         - lephare/php:8
         - lephare/php:latest

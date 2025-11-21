@@ -7,6 +7,7 @@ Pre-configured Docker image that follows [Le Phare](https://www.lephare.com) pro
 
 | Version | Supported until |
 |---------|-----------------|
+| 8.5     | 31 Dec. 2029    |
 | 8.4     | 31 Dec. 2028    |
 | 8.3     | 31 Dec. 2027    |
 | 8.2     | 31 Dec. 2026    |
