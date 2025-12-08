@@ -43,7 +43,6 @@ services:
     build:
       args:
         <<: *build-args
-        PHP_EXTENSIONS: "@composer apcu exif gd imagick intl memcached opcache pdo_mysql pdo_pgsql pgsql soap zip" # remove after xdebug is fixed
         PHP_VERSION: "8.5"
         PHP_TIMEZONE: "UTC"
       x-bake: *build-x-bake
