@@ -1,10 +1,11 @@
 # syntax=docker/dockerfile:1
 # check=error=true
 
+ARG DEBIAN_VERSION=trixie
 ARG PHP_VERSION=8.5
 
 FROM mlocati/php-extension-installer:2 AS extension-installer
-FROM php:${PHP_VERSION}-fpm AS base
+FROM php:${PHP_VERSION}-fpm-${DEBIAN_VERSION} AS base
 FROM base
 ARG PHP_EXTENSIONS
 ARG PHP_TIMEZONE=UTC

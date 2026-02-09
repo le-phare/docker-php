@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -37,4 +37,5 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v6
         with:
+          targets: image-all
           push: ${{ github.event_name != 'pull_request' }}
