@@ -1,23 +1,15 @@
 services:
-  php_81:
-    image: lephare/php:8.1
+  php_82:
+    image: lephare/php:8.2
     build:
       args: &build-args
-        PHP_VERSION: "8.1"
+        PHP_VERSION: "8.2"
         PHP_EXTENSIONS: "@composer apcu exif gd imagick intl memcached opcache pdo_mysql pdo_pgsql pgsql soap xdebug zip"
         PHP_TIMEZONE: "Europe/Paris"
       x-bake: &build-x-bake
         platforms:
           - linux/amd64
           - linux/arm64
-
-  php_82:
-    image: lephare/php:8.2
-    build:
-      args:
-        <<: *build-args
-        PHP_VERSION: "8.2"
-      x-bake: *build-x-bake
 
   php_83:
     image: lephare/php:8.3
