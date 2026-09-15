@@ -25,7 +25,7 @@ target "php-8-2" {
   inherits = ["docker-metadata-action"]
   name = "php-8-2-${debian-version}"
   matrix = {
-    debian-version = ["bullseye", "bookworm", "trixie"]
+    debian-version = ["bookworm", "trixie"]
   }
   args = {
     DEBIAN_VERSION = debian-version
@@ -42,7 +42,7 @@ target "php-8-3" {
   inherits = ["docker-metadata-action"]
   name = "php-8-3-${debian-version}"
   matrix = {
-    debian-version = ["bullseye", "bookworm", "trixie"]
+    debian-version = ["bookworm", "trixie"]
   }
   args = {
     DEBIAN_VERSION = debian-version
@@ -59,7 +59,7 @@ target "php-8-4" {
   inherits = ["docker-metadata-action"]
   name = "php-8-4-${debian-version}"
   matrix = {
-    debian-version = ["bullseye", "bookworm", "trixie"]
+    debian-version = ["bookworm", "trixie"]
   }
   args = {
     DEBIAN_VERSION = debian-version
