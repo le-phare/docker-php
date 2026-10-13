@@ -3,6 +3,13 @@
 Pre-configured Docker image that follows [Le Phare](https://www.lephare.com) projects
 [recommendations](https://faros.lephare.com)
 
+## Included tools
+
+- [Composer](https://getcomposer.org)
+- [Symfony CLI](https://symfony.com/download) (latest release at build time), e.g. for `symfony lsp:check`.
+  Its first run downloads the language tools into `$HOME/.config/symfony-cli`: mount this directory
+  from the host so that each `docker compose run --rm` does not download them again.
+
 ## Supported versions
 
 | Version | Supported until |

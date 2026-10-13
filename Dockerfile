@@ -11,6 +11,8 @@ ARG PHP_TIMEZONE=UTC
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
+COPY --link --from=ghcr.io/symfony-cli/symfony-cli /usr/local/bin/symfony /usr/local/bin/symfony
+
 COPY --link symfony.ini /usr/local/etc/php/conf.d/
 
 COPY --link symfony.pool.conf /usr/local/etc/php/pool.d/
