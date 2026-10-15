@@ -26,4 +26,21 @@ RUN sed -i "s@PHP_TIMEZONE@${PHP_TIMEZONE}@g" /usr/local/etc/php/conf.d/symfony.
     && usermod -u 1000 -G staff www-data \
     && groupmod -g 1000 www-data
 
+ARG TARGETARCH
+
+# Installed directly: `symfony lsp:check` would download it at runtime into $HOME
+RUN set -eux; \
+    case "${TARGETARCH}" in amd64) arch=x64 ;; arm64) arch=arm64 ;; *) exit 1 ;; esac; \
+    release_url=https://github.com/symfony/language-tools/releases; \
+    version="$(curl -fsSLI -o /dev/null -w '%{url_effective}' "${release_url}/latest")"; \
+    version="${version##*/}"; \
+    asset="symfony-lsp-${version}-linux-${arch}"; \
+    cd /tmp; \
+    curl -fsSLO "${release_url}/download/${version}/${asset}.tar.gz"; \
+    curl -fsSLO "${release_url}/download/${version}/SHA256SUMS"; \
+    grep " ${asset}.tar.gz\$" SHA256SUMS | sha256sum -c -; \
+    tar -xzf "${asset}.tar.gz" -C /usr/local/bin --strip-components=1 "${asset}/symfony-lsp"; \
+    rm "${asset}.tar.gz" SHA256SUMS; \
+    symfony-lsp --version
+
 WORKDIR /var/www/symfony

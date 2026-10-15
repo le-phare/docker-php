@@ -3,6 +3,12 @@
 Pre-configured Docker image that follows [Le Phare](https://www.lephare.com) projects
 [recommendations](https://faros.lephare.com)
 
+## Included tools
+
+- [Composer](https://getcomposer.org)
+- [Symfony Language Tools](https://github.com/symfony/language-tools) (latest release at build time):
+  run `symfony-lsp check` to report unknown routes, templates, translation keys, services…
+
 ## Supported versions
 
 | Version | Supported until |
